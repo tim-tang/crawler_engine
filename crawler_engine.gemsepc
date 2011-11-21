@@ -1,0 +1,15 @@
+Gem::Specification.new do |s|
+  s.name = 'crawler_engine'
+  s.version = '1.0'
+  s.has_rdoc = true
+  s.required_ruby_version = ">= 1.9.2"
+  s.platform = "ruby"
+  s.required_rubygems_version = ">= 0"
+  s.author = "tim.tang"
+  s.email = "tang.jilong@139.com"
+  s.summary = "Gem for crawler news post"
+  s.homepage = 'http://www.everyday-cn.com'
+  s.files = ["lib/crawler_engine.rb"]
+end
+
+
