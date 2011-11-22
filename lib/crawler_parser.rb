@@ -11,15 +11,6 @@ class CrawlerParser
 	#logger.level = Logger::INFO
 	FS_LEN = 80
 
-	def create(title, link, content, pubDate)
-		@post= Post.new
-		@post.title= title.to_s.force_encoding('UTF-8')
-		@post.source= link.to_s.force_encoding('UTF-8')
-		@post.content= content.to_s.force_encoding('UTF-8')
-		@post.published_at= pubDate.to_s.force_encoding('UTF-8')
-		@post.save
-	end
-
 	def parse_rss(sources)
 		return if sources.nil? or sources.size.eql?(0)
 		#logger.info("Links to crawl >>"+links.to_s)
@@ -34,32 +25,39 @@ class CrawlerParser
 				puts ex
 			end
 			#TODO:
-			puts rss.feed_tags.title
-			puts rss.feed_tags.description
+			#puts rss.feed_tags.title
+			#puts rss.feed_tags.description
 
 			for item in rss.items
 				print_rss_item(item)
 				#parse post details
 				begin
-				doc = Nokogiri::HTML.parse(open(item.link.to_s), nil, "UTF-8")
+					doc = Nokogiri::HTML open(item.link.to_s)
 				rescue Exception=>ex
 					#logger.error(ex)
 					#logger.info("Nokogiri got unexpected error")
 					puts ex
 				end
 				return unless doc
-				doc.xpath(filter).each do |content|
+				doc.xpath(source.filter).each do |content|
+					#puts content.to_s.force_encoding('GB2312')
 					Iconv.iconv("GB2312//IGNORE","UTF-8//IGNORE", content)
-					create(item.title, item.link, content, item.pubDate)
+					Post.create(
+						:title=>item.title.to_s.force_encoding('UTF-8'),
+						:source=>item.link.to_s.force_encoding('UTF-8'),
+						:content=>content.to_s.force_encoding('UTF-8'),
+						:published_at=>item.pubDate,
+						:site_name=>source.site_name,
+						:category => source.category)
 				end
 			end
 			#update crawler exec timestamp
-            source.update_attribute("crawled_at", Time.now)
+			source.update_attribute("crawled_at", Time.now)
 		end
 	end
 
 	private
-	def print_rss_item
+	def print_rss_item(item)
 		puts "-" * FS_LEN
 		puts "title:" + item.title.to_s
 		puts "author:" + item.author.to_s
