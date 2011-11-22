@@ -9,7 +9,9 @@ Gem::Specification.new do |s|
   s.email = "tang.jilong@139.com"
   s.summary = "Gem for crawler news post"
   s.homepage = 'http://www.everyday-cn.com'
-  s.files = ["lib/crawler_engine.rb"]
+  s.files = %w[
+    lib/crawler_engine.rb
+  ]
 end
 
 
