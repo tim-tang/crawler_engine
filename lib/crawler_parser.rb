@@ -7,8 +7,8 @@ require 'iconv'
 require 'logger'
 
 class CrawlerParser
-	logger = Logger.new('/tmp/crawlerEngine.log', 10, 1024000)
-	logger.level = Logger::INFO
+	#logger = Logger.new('/tmp/crawlerEngine.log', 'daily')
+	#logger.level = Logger::INFO
 	FS_LEN = 80
 
 	def create(title, link, content, pubDate)
@@ -20,16 +20,18 @@ class CrawlerParser
 		@post.save
 	end
 
-	def parse_rss(links)
-		return if links.nil? or links.size.eql?(0)
-		logger.info("Links to crawl >>"+links.to_s)
-		links.uniq!
-		links.each do |link, filter|
+	def parse_rss(sources)
+		return if sources.nil? or sources.size.eql?(0)
+		#logger.info("Links to crawl >>"+links.to_s)
+		puts "Links to crawl >>"+sources.to_s
+		sources.uniq!
+		sources.each do |source|
 			begin
-				rss = SimpleRSS.parse open(link)
+				rss = SimpleRSS.parse open(source.link)
 			rescue Exception=>ex
-				logger.error(ex)
-				logger.info("SimpleRSS got unexpected error, rss exit")
+				#logger.error(ex)
+				#logger.info("SimpleRSS got unexpected error, rss exit")
+				puts ex
 			end
 			#TODO:
 			puts rss.feed_tags.title
@@ -39,10 +41,11 @@ class CrawlerParser
 				print_rss_item(item)
 				#parse post details
 				begin
-				doc = Nokogiri::HTML.parse(open(link), nil, "UTF-8")
+				doc = Nokogiri::HTML.parse(open(item.link.to_s), nil, "UTF-8")
 				rescue Exception=>ex
-					logger.error(ex)
-					logger.info("Nokogiri got unexpected error")
+					#logger.error(ex)
+					#logger.info("Nokogiri got unexpected error")
+					puts ex
 				end
 				return unless doc
 				doc.xpath(filter).each do |content|
@@ -50,6 +53,8 @@ class CrawlerParser
 					create(item.title, item.link, content, item.pubDate)
 				end
 			end
+			#update crawler exec timestamp
+            source.update_attribute("crawled_at", Time.now)
 		end
 	end
 
