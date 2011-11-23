@@ -13,7 +13,7 @@ class CrawlerEngineGenerator < Rails::Generators::Base
 	end
 
 	def create_migration_file
-		migration_template 'migration.rb', 'db/migrate/crawler_engine_migration'
+		migration_template 'migration.rb', 'db/migrate/create_crawler_engine'
 	end
 end
 
