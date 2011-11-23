@@ -14,8 +14,12 @@ Gem::Specification.new do |s|
   s.summary = "Gem for crawler news post"
   s.homepage = 'http://www.everyday-cn.com'
   s.add_runtime_dependency 'rails'
+  s.add_dependency("nokogiri",">=1.5.0")
+  s.add_dependency("simple-rss",">=1.2.3")
+  s.add_dependency("rest-open-uri",">=1.0.0")
   s.files =`git ls-files`.split("\n")
   s.require_paths = ['lib']
+  s.description="Crawler Engine provides function of crawl all news from the customized website"
 end
 
 
