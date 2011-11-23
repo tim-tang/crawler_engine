@@ -4,9 +4,10 @@ require 'rails/generators/migration'
 class CrawlerEngineGenerator < Rails::Generator::Base
 	include Rails::Generators::Migration
 
-	desc "Generates migration for Tag and Tagging models"
+	desc "Generates migration for crawler engine model"
 	def self.source_root
-		File.join(File.dirname(__FILE__), 'templates')
+		#File.join(File.dirname(__FILE__), 'templates')
+		File.expand_path('../templates', __File__)
 	end
 
 	def create_migration_file
