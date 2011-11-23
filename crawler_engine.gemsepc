@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.author = "tim.tang"
   s.email = "tang.jilong@139.com"
   s.summary = "Gem for crawler news post"
-  s.homepage = 'http://www.everyday-cn.com'
+  s.homepage = 'https://github.com/tim-tang/crawler_engine'
   s.add_runtime_dependency 'rails'
   s.add_dependency("nokogiri",">=1.5.0")
   s.add_dependency("simple-rss",">=1.2.3")
