@@ -41,7 +41,8 @@ class CrawlerParser
 				return unless doc
 				doc.xpath(source.filter).each do |content|
 					#puts content.to_s.force_encoding('GB2312')
-					Iconv.iconv("GB2312//IGNORE","UTF-8//IGNORE", content)
+					#Iconv.iconv("GB2312//IGNORE","UTF-8//IGNORE", content)
+					#Iconv.iconv("UTF-8//IGNORE","GB2312//IGNORE", content)
 					Post.create(
 						:title=>item.title.to_s.force_encoding('UTF-8'),
 						:source=>item.link.to_s.force_encoding('UTF-8'),
@@ -62,6 +63,7 @@ class CrawlerParser
 		puts "title:" + item.title.to_s
 		puts "author:" + item.author.to_s
 		puts "description:" + item.description.to_s
+		#puts Iconv.iconv("UTF-8//IGNORE","GB2312//IGNORE",item.description.to_s )
 		puts "link:" + item.link.to_s
 		puts "pubDate:" + item.pubDate.to_s
 		puts "guid:" + item.guid.to_s
