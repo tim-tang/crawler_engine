@@ -12,7 +12,7 @@ class CreateCrawlerEngine < ActiveRecord::Migration
 			t.string :site_name
 			t.string :title
 			t.string :source
-			t.content :content
+			t.text :content
 			t.string :category
 			t.integer :speed
 			t.integer :support_num
