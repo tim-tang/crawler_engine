@@ -2,7 +2,7 @@ require 'rails/generators'
 require 'rails/generators/migration'
 require 'rails/generators/active_record'
 
-class CrawlerEngineGenerator < Rails::Generator::Base
+class CrawlerEngineGenerator < Rails::Generators::Base
 	include Rails::Generators::Migration
 	extend ActiveRecord::Generators::Migration
 
