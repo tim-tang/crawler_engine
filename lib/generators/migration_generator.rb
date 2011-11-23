@@ -1,8 +1,10 @@
 require 'rails/generators'
 require 'rails/generators/migration'
+require 'rails/generators/active_record'
 
 class CrawlerEngineGenerator < Rails::Generator::Base
 	include Rails::Generators::Migration
+	extend ActiveRecord::Generators::Migration
 
 	desc "Generates migration for crawler engine model"
 	def self.source_root
