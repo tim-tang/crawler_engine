@@ -6,7 +6,7 @@ class HtmlGen
 	@posts.each do |post|
 		puts "Generating html for post >>"+post.title
 		file_dir = File.expand_path('../public/html_contents', __FILE__)
-		file_name = file_dir+"/"+post.published_at.strftime("%Y%m%d")+"_"+post.id.to_s+".html"
+		file_name = file_dir+"/"+post.id.to_s+".html"
 		htmlFile = File.new(file_name, "w+")
 		htmlFile.puts "<html><header><title>Everyday News</title><meta http-equiv=Content-Type content=text/html;charset=utf-8></header>"
 		htmlFile.puts "<body>"
