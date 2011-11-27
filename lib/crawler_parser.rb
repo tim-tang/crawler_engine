@@ -54,7 +54,9 @@ class CrawlerParser
 								@post.source=item.link.to_s.force_encoding('UTF-8')
 								#puts content.to_s.force_encoding('UTF-8')
 								@post.content=content.to_s.force_encoding('UTF-8')
-								@post.thumbnail=content.to_s.scan(/<img[^<^{^(]+src=['"]{0,1}([^>^\s^"]*)['"]{0,1}[^>]*>/im)[0].to_s.force_encoding('UTF-8')
+								if content.to_s.scan(/<img[^<^{^(]+src=['"]{0,1}([^>^\s^"]*)['"]{0,1}[^>]*>/im).size>0
+								   @post.thumbnail=content.to_s.scan(/<img[^<^{^(]+src=['"]{0,1}([^>^\s^"]*)['"]{0,1}[^>]*>/im)[0][0].to_s.force_encoding('UTF-8')
+								end
 																  @post.published_at=item.pubDate
 																  @post.site_name=source.site_name
 																  @post.category=source.category
