@@ -2,13 +2,13 @@
 require File.expand_path('../crawler_parser',__FILE__)
 require File.expand_path('../source',__FILE__)
 
-class CrawlerEngine
+Module CrawlerEngine
+class << self
 	def start
 		@cp = CrawlerParser.new
 		@sources = Source.find(:all)
 		@cp.parse_rss(@sources)
 	end
 end
-
-@ce = CrawlerEngine.new
-@ce.start
+#@ce = CrawlerEngine.new
+#@ce.start
