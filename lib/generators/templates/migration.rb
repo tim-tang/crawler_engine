@@ -11,6 +11,7 @@ class CreateCrawlerEngine < ActiveRecord::Migration
 		create_table :posts, :force => true do |t|
 			t.string :site_name
 			t.string :title
+			t.string :thumbnail
 			t.string :source
 			t.text :content
 			t.string :category
