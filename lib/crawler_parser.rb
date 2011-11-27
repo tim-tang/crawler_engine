@@ -21,6 +21,7 @@ class CrawlerParser
 		threads=[]
 		sources.each do |source|
 			threads << Thread.new do
+				Thread.current["name"]=source.id
 				puts "Create thread for num >>"+source.id.to_s
 				begin
 					rss = SimpleRSS.parse open(source.link)
@@ -66,6 +67,7 @@ class CrawlerParser
 		# thread end stop treads finally.
 		threads.each do |thread|
 			thread.join
+			puts "stop thread num >> #{thread.inspect}:#{thread[:name]}"
 		end
 	end
 

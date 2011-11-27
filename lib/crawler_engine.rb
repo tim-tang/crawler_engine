@@ -3,8 +3,12 @@ require File.expand_path('../crawler_parser',__FILE__)
 require File.expand_path('../source',__FILE__)
 
 class CrawlerEngine
-	@cp = CrawlerParser.new
-	@sources = Source.find(:all)
-	#@sources = Source.where(:id=>1)
-	@cp.parse_rss(@sources)
+	def start
+		@cp = CrawlerParser.new
+		@sources = Source.find(:all)
+		@cp.parse_rss(@sources)
+	end
 end
+
+@ce = CrawlerEngine.new
+@ce.start
