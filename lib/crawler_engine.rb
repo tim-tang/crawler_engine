@@ -11,5 +11,5 @@ module CrawlerEngine
 		end
 	end
 end
-#@ce = CrawlerEngine.new
+#CrawlerEngine.start
 #@ce.start
