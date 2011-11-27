@@ -3,7 +3,7 @@ require File.expand_path('../crawler_parser',__FILE__)
 require File.expand_path('../source',__FILE__)
 
 Module CrawlerEngine
-class << self
+class CrawlerEngine
 	def start
 		@cp = CrawlerParser.new
 		@sources = Source.find(:all)
