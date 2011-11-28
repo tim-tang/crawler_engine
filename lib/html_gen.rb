@@ -11,8 +11,8 @@ class HtmlGen
 
 	def generate(post)
 		date=post.published_at.strftime("%Y%m%d")
-		#file_dir="#{RAILS_ROOT}/public/html_contents"
-		file_dir = File.expand_path('../public/html_contents', __FILE__)
+		file_dir="#{RAILS_ROOT}/public/html_contents"
+		#file_dir = File.expand_path('../public/html_contents', __FILE__)
 		if File.exist?(file_dir)
 			puts "File directory already exists..."
 		else
