@@ -60,7 +60,7 @@ class CrawlerParser
 																  @post.published_at=item.pubDate
 																  @post.site_name=source.site_name
 																  @post.category=source.category
-																  @post.save(@post)
+																  #@post.save
 																  @html_gen.generate(@post)
 							rescue Exception=>ex
 								puts ex
