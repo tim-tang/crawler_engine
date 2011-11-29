@@ -5,6 +5,7 @@ require 'nokogiri'
 require 'rest-open-uri'
 require 'simple-rss'
 require 'iconv'
+require 'logger'
 
 class CrawlerParser
 	FS_LEN = 80
@@ -17,8 +18,8 @@ class CrawlerParser
 		log.info("Links to crawl >>"+sources.to_s)
 		puts "Links to crawl >>"+sources.to_s
 		sources.uniq!
-	    threads=[]
-		sources.each do |source|
+		threads=[]
+	    sources.each do |source|
 			threads << Thread.new do
 				Thread.current["name"]=source.id
 				log.info("Create thread for num >>#{source.id.to_s}")
@@ -57,7 +58,7 @@ class CrawlerParser
 								@post.site_name=source.site_name
 								@post.category=source.category
 								@post.save
-								@html_gen.generate(@post)
+								#@html_gen.generate(@post)
 							rescue Exception=>ex
 								log.error("Got error while parse html contents: #{ex}")
 								puts ex
@@ -69,16 +70,13 @@ class CrawlerParser
 				source.update_attribute("crawled_at", Time.now)
 			end
 		end
-        stop_engine(threads)
-	end
-
-	def stop_engine(threads)
 		# thread end stop treads finally.
 		threads.each do |thread|
 			thread.join
 			log.info("stop thread num >> #{thread.inspect}:#{thread[:name]}")
 			puts "stop thread num >> #{thread.inspect}:#{thread[:name]}"
 		end
+	  @html_gen.generate_from_db
 	end
 
 	private
