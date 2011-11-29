@@ -5,12 +5,12 @@ require 'active_record'
 
 
 class HtmlGen
-	def generate_from_db
+	def generate_posts
 		ActiveRecord::Base.transaction do
 			begin
 			sql = ActiveRecord::Base.connection()
 			sql.insert "create table tmp select max(id) as id from posts group by title"
-			sql.insert "delete from posts where id not in (select id from tmp)"
+			sql.insert "delete from posts where id not exits(select id from tmp)"
 			sql.insert "drop table tmp"
 			rescue Exception => ex
 				# ex.message
