@@ -30,8 +30,8 @@ class HtmlGen
 		log = Logger.new('/tmp/crawler_engine.log', 'daily')
 		log.level = Logger::INFO
 		date=post.published_at.strftime("%Y%m%d")
-		#file_dir="#{RAILS_ROOT}/public/html_contents"
-		file_dir = File.expand_path('../public/html_contents', __FILE__)
+		file_dir="#{RAILS_ROOT}/public/html_contents"
+		#file_dir = File.expand_path('../public/html_contents', __FILE__)
 		if File.exist?(file_dir)
 			log.info("File directory already exists...")
 		else
