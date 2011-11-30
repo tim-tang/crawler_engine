@@ -19,7 +19,9 @@ class CrawlerParser
 		puts "Links to crawl >>"+sources.to_s
 		sources.uniq!
 		threads=[]
+		last_crawled=Time.new
 		sources.each do |source|
+			last_crawled=source.crawled_at
 			threads << Thread.new do
 				Thread.current["name"]=source.id
 				log.info("Create thread for num >>#{source.id.to_s}")
@@ -32,8 +34,6 @@ class CrawlerParser
 				if rss !=nil
 					for item in rss.items
 						#print_rss_item(item)
-						#puts "Post published date >>" + item.pubDate.to_s
-						#puts "Crawler updated date >>" + source.crawled_at.to_s
 						if item.pubDate >= source.crawled_at
 							#print_rss_item(item)
 							begin
@@ -59,7 +59,6 @@ class CrawlerParser
 									@post.site_name=source.site_name
 									@post.category=source.category
 									@post.save
-									#@html_gen.generate(@post)
 								rescue Exception=>ex
 									log.error("Got error while parse html contents: #{ex}")
 									puts ex

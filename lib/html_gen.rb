@@ -5,7 +5,7 @@ require 'active_record'
 
 
 class HtmlGen
-	def generate_posts
+	def generate_posts(last_crawled)
 		ActiveRecord::Base.transaction do
 			begin
 			sql = ActiveRecord::Base.connection()
@@ -17,7 +17,8 @@ class HtmlGen
 				raise ActiveRecord::Rollback, ex.message # rollback
 			end
 		end
-		@posts = Post.find(:all)
+		puts "Last Crawled time at #{last_crawled}"
+		@posts = Post.find_by_sql("select * from posts where publised_at > #{last_crawled}")
 		@posts.each do |post|
 			generate(post)
 		end
