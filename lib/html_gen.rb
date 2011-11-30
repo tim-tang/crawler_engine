@@ -11,7 +11,7 @@ class HtmlGen
 			begin
 				sql = ActiveRecord::Base.connection()
 				sql.insert "create table tmp select max(id) as id from posts group by title"
-				sql.insert "delete from posts where id not exits(select id from tmp)"
+				sql.insert "delete from posts where id not in(select id from tmp)"
 				sql.insert "drop table tmp"
 			rescue Exception => ex
 				# ex.message
@@ -19,7 +19,8 @@ class HtmlGen
 			end
 		end
 		puts "Last Crawled time at #{last_crawled}"
-		@posts = Post.find_by_sql("select * from posts where publised_at > #{last_crawled}")
+		@posts = Post.find_by_sql("select * from posts where published_at > '#{last_crawled.strftime("%Y-%m-%d %H:%M:%S")}'")
+		#@posts = Post.find_by_sql("select * from posts where published_at > #{last_crawled}")
 		@posts.each do |post|
 			generate(post)
 		end
@@ -29,8 +30,8 @@ class HtmlGen
 		log = Logger.new('/tmp/crawler_engine.log', 'daily')
 		log.level = Logger::INFO
 		date=post.published_at.strftime("%Y%m%d")
-		file_dir="#{RAILS_ROOT}/public/html_contents"
-		#file_dir = File.expand_path('../public/html_contents', __FILE__)
+		#file_dir="#{RAILS_ROOT}/public/html_contents"
+		file_dir = File.expand_path('../public/html_contents', __FILE__)
 		if File.exist?(file_dir)
 			log.info("File directory already exists...")
 		else

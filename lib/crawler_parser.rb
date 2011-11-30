@@ -76,7 +76,7 @@ class CrawlerParser
 			log.info("stop thread num >> #{thread.inspect}:#{thread[:name]}")
 			puts "stop thread num >> #{thread.inspect}:#{thread[:name]}"
 		end
-		@html_gen.generate_posts
+		@html_gen.generate_posts(last_crawled)
 	end
 
 	private
