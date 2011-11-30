@@ -30,7 +30,7 @@ class HtmlGen
 		log = Logger.new('/tmp/crawler_engine.log', 'daily')
 		log.level = Logger::INFO
 		date=post.published_at.strftime("%Y%m%d")
-		file_dir="#{RAILS_ROOT}/public/html_contents"
+		file_dir="#{Rails.root.to_s}/public/html_contents"
 		#file_dir = File.expand_path('../public/html_contents', __FILE__)
 		if File.exist?(file_dir)
 			log.info("File directory already exists...")
@@ -67,7 +67,7 @@ class HtmlGen
 		if post.thumbnail!= nil
 			open(post.thumbnail) do |data|
 				new_image = File.new(file_dir+"/#{post.id}.png", "w")
-				new_image.puts data.read
+				new_image.puts data.read.to_s.force_encoding('UTF-8')
 				new_image.close
 			end
 		end
