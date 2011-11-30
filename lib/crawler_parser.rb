@@ -45,7 +45,6 @@ class CrawlerParser
 							return unless doc
 							doc.xpath(source.filter).each do |content|
 								begin
-									#Iconv.iconv("GB2312//IGNORE","UTF-8//IGNORE", content)
 									#Iconv.iconv("UTF-8//IGNORE","GB2312//IGNORE", content)
 									@post = Post.new
 									@post.title=item.title.to_s.force_encoding('UTF-8')
