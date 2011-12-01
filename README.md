@@ -22,4 +22,9 @@ rake db:migrate
 # in your Gemfile
 gem "crawler-engine"
 
-# TODO:
+# start engine in your rails project
+require 'crawler_engine'
+
+...
+CrawlerEngine.start
+...
