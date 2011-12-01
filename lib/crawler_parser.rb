@@ -6,6 +6,7 @@ require 'rest-open-uri'
 require 'simple-rss'
 require 'iconv'
 require 'logger'
+require 'fileutils'
 
 class CrawlerParser
 	FS_LEN = 80
@@ -81,6 +82,10 @@ class CrawlerParser
 
 	def clear_posts(date)
 		Post.destroy_all "published_at < '#{date}'"
+		#TODO:
+		#file_dir = File.expand_path('../public/html_contents/', __FILE__)
+		#file_dir="#{Rails.root.to_s}/public/html_contents"
+		#FileUtils.rm_r(file_dir)
 	end
 
 	private
