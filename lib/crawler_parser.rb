@@ -79,6 +79,10 @@ class CrawlerParser
 		@html_gen.generate_posts(last_crawled)
 	end
 
+	def clear_posts(date)
+		Post.destroy_all "published_at < '#{date}'"
+	end
+
 	private
 	def print_rss_item(item)
 		puts "-" * FS_LEN

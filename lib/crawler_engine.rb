@@ -4,11 +4,15 @@ require File.expand_path('../source',__FILE__)
 
 module CrawlerEngine
 	class << self
+		@cp = CrawlerParser.new
 		def start
-			@cp = CrawlerParser.new
 			@sources = Source.find(:all)
 			#puts @sources.to_s
 			@cp.parse_rss(@sources)
+		end
+
+		def destroy(date)
+			@cp.clear_posts(date)
 		end
 	end
 end
