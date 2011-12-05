@@ -43,6 +43,7 @@ class HtmlGen
 		begin
 			log.info("Generating html for post >> #{post.title}")
 			puts "Generating html for post >>#{post.published_at}: #{post.title}"
+			puts "Generating html SOURCE >>#{post.source}"
 			#file_name = file_dir+"/"+post.title.force_encoding('UTF-8')+".html"
 			file_name = file_dir+"/#{post.id}.html"
 			htmlFile = File.new(file_name, "w+")
