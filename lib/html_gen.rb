@@ -30,23 +30,19 @@ class HtmlGen
 		log = Logger.new('/tmp/crawler_engine.log', 'daily')
 		log.level = Logger::INFO
 		date=post.published_at.strftime("%Y%m%d")
-		file_dir="#{Rails.root.to_s}/public/html_contents"
-		#file_dir = File.expand_path('../public/html_contents', __FILE__)
-		if File.exist?(file_dir)
-			log.info("File directory already exists...")
-		else
+		#file_dir="#{Rails.root.to_s}/public/html_contents"
+		file_dir = File.expand_path('../public/html_contents', __FILE__)
+		if !File.exist?(file_dir)
 			Dir.mkdir(file_dir)
 		end
-		if File.exist?(file_dir.concat("/"+date))
-			log.info("Sub File exits...")
-		else
+		if !(File.exist?(file_dir.concat("/"+date)))
 			Dir.mkdir(file_dir)
 		end
 		# download image to local
 		generate_img(post, file_dir, log)
 		begin
 			log.info("Generating html for post >> #{post.title}")
-			puts "Generating html for post >> #{post.title}"
+			puts "Generating html for post >>#{post.published_at}: #{post.title}"
 			#file_name = file_dir+"/"+post.title.force_encoding('UTF-8')+".html"
 			file_name = file_dir+"/#{post.id}.html"
 			htmlFile = File.new(file_name, "w+")
